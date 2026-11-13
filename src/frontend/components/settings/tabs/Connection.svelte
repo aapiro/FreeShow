@@ -350,7 +350,7 @@
             <T id="cloud.sync" />
         </MaterialButton>
         <MaterialButton title="<b>popup.sync_categories:</b> settings.sync_categories_tip" icon="options" on:click={() => activePopup.set("sync_categories")} />
-        <MaterialButton on:click={() => sendMain(Main.URL, "https://b1.church")} title="B1.Church" white>
+        <MaterialButton on:click={() => sendMain(Main.PROVIDER_URL, { providerId: "churchApps" })} title="B1.Church" white>
             <Icon id="launch" white />
         </MaterialButton>
     </InputRow>

@@ -69,6 +69,7 @@ export enum Main {
     SHOWS = "SHOWS",
     AUTO_UPDATE = "AUTO_UPDATE",
     URL = "URL",
+    PROVIDER_URL = "PROVIDER_URL",
     LANGUAGE = "LANGUAGE",
     GET_PATHS = "GET_PATHS",
     DATA_PATH = "DATA_PATH",
@@ -208,6 +209,7 @@ export interface MainSendPayloads {
     [Main.DELETE_BACKUP]: { path: string }
     [Main.SPELLCHECK]: { addToDictionary?: string; fixSpelling?: string }
     [Main.URL]: string
+    [Main.PROVIDER_URL]: { providerId: string }
     [Main.LANGUAGE]: { lang: string; strings: Dictionary }
     [Main.UPDATE_DATA_PATH]: { newPath: string; oldPath: string }
     [Main.LOG_ERROR]: ErrorLog

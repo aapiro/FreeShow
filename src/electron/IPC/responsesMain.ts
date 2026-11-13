@@ -19,6 +19,7 @@ import { openNowPlaying, setPlayingState, unsetPlayingAudio } from "../audio/now
 import { CaptureHelper } from "../capture/CaptureHelper"
 import { canSync, getSyncTeams, hasTeamData, markAsNewSync, restoreCloudBackup, syncData } from "../cloud/syncManager"
 import { ChurchAppsChat } from "../contentProviders/churchApps/ChurchAppsChat"
+import { getChurchAppsAppUrl } from "../contentProviders/churchApps/types"
 import { ContentProviderRegistry } from "../contentProviders/ContentProviderRegistry"
 import { deleteBackup, getBackups, restoreFiles } from "../data/backup"
 import { getLocalIPs } from "../data/bonjour"
@@ -93,6 +94,8 @@ export const mainResponses: MainResponses = {
     [Main.SHOWS]: (() => loadShowsAsync()) as any,
     [Main.AUTO_UPDATE]: () => checkForUpdates(),
     [Main.URL]: (data) => openURL(data),
+    // Opens the provider's web app (its own panel, not the vendor's marketing site)
+    [Main.PROVIDER_URL]: (data) => openProviderUrl(data.providerId),
     [Main.LANGUAGE]: (data) => setGlobalMenu(data.strings),
     [Main.GET_PATHS]: () => getPaths(),
     [Main.DATA_PATH]: () => getDataFolderRoot(),
@@ -400,6 +403,14 @@ function checkRamUsage() {
 // URL: open url in default web browser
 export const openURL = (url: string) => {
     shell.openExternal(url)
+    return
+}
+
+// PROVIDER_URL: open the provider's own web app (self-hosted installs point elsewhere than b1.church)
+export const openProviderUrl = (providerId: string) => {
+    let url = ""
+    if (providerId === "churchApps") url = getChurchAppsAppUrl()
+    if (url) shell.openExternal(url)
     return
 }
 
