@@ -29,9 +29,11 @@ export type ModelIntegrity = "ok" | "missing" | "outdated"
 
 export class NemotronSetupManager {
     static isPlatformSupported(): boolean {
-        // sherpa-onnx-node does not work on Intel macOS (darwin-x64)
-        if (process.platform === "darwin" && process.arch === "x64") return false
-        return true
+        // sherpa-onnx-node ships a working darwin-x64 prebuild (verified with Electron 45:
+        // OnlineRecognizer loads and decodes inside a utilityProcess), so Intel Macs are fine.
+        // Kept as a hook for platforms that may lack a prebuild later on.
+        const supported = ["darwin", "win32", "linux"]
+        return supported.includes(process.platform)
     }
 
     static getBinaryName() {
